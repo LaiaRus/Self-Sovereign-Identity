@@ -1,0 +1,64 @@
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+
+
+# REACT APP IGNORE
+
+# dependencies
+react_app/node_modules
+react_app/.pnp
+react_app/.pnp.js
+
+# testing
+react_app/coverage
+
+# production
+react_app/build
+
+# misc
+react_app/.DS_Store
+react_app/.env.local
+react_app/.env.development.local
+react_app/.env.test.local
+react_app/.env.production.local
+react_app/.env
+react_app/public/env.js
+
+react_app/npm-debug.log*
+react_app/yarn-debug.log*
+react_app/yarn-error.log*
+
+
+
+# MU IGNORE
+
+# dependencies
+mu_express_api/node_modules
+mu_express_api/.pnp
+.pnp.js
+
+# testing
+mu_express_api/coverage
+
+# production
+mu_express_api/build
+
+# misc
+mu_express_api/.DS_Store
+mu_express_api/.env.local
+mu_express_api/.env.development.local
+mu_express_api/.env.test.local
+mu_express_api/.env.production.local
+mu_express_api/.env
+
+mu_express_api/npm-debug.log*
+mu_express_api/yarn-debug.log*
+mu_express_api/yarn-error.log*
+
+mu_express_api/config.js
+
+
+
+# GYM IGNORE
+
+gym_express_api/node_modules

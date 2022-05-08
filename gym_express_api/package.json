@@ -1,0 +1,30 @@
+{
+  "name": "gym_express_api",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server_gym.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@veramo/core": "^3.1.0",
+    "@veramo/credential-w3c": "^3.1.0",
+    "@veramo/data-store": "^3.1.0",
+    "@veramo/did-manager": "^3.1.0",
+    "@veramo/did-provider-ethr": "^3.1.0",
+    "@veramo/did-provider-web": "^3.1.0",
+    "@veramo/did-resolver": "^3.1.0",
+    "@veramo/key-manager": "^3.1.0",
+    "@veramo/kms-local": "^3.1.0",
+    "@veramo/selective-disclosure": "^3.1.0",
+    "body-parser": "^1.20.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.0",
+    "express": "^4.17.3",
+    "express-session": "^1.17.2",
+    "sqlite3": "^5.0.2",
+    "uuid": "^8.3.2"
+  }
+}
