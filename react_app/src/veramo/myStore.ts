@@ -126,10 +126,10 @@ class MyDidStore implements AbstractDIDStore {
     return new Promise<IIdentifier>((resolve, reject) => {
       const lStorage = getLocalStorage('MyDidStore')
       var index = -1
-      if (args.alias !== null && args.alias !== '') {
+      if (args.alias !== undefined && args.alias !== '') {
         index = lStorage.findIndex((x: any) => x.alias === args.alias)
       }
-      if (args.did !== null && args.did !== '') {
+      if (args.did !== undefined && args.did !== '') {
         index = lStorage.findIndex((x: any) => x.did === args.did)
       }
       if (index !== -1) {
