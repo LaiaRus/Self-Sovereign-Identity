@@ -1,4 +1,3 @@
-import env from "react-dotenv";
 import * as React from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
@@ -35,7 +34,7 @@ export default function SignIn() {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ jwt: jwt })
     };
-    const response = await fetch(env.BACKEND_MU_URL + '/verifyJwt', requestOptions);
+    const response = await fetch(process.env.REACT_APP_BACKEND_MU_URL + '/verifyJwt', requestOptions);
     const body = await response.json();
     return body
   }
@@ -51,7 +50,7 @@ export default function SignIn() {
         password: data.get('password')
       })
     };
-    fetch(env.BACKEND_MU_URL + '/login', requestOptions)
+    fetch(process.env.REACT_APP_BACKEND_MU_URL + '/login', requestOptions)
       .then((response) => {
         if (response.status === 200) {
           return response.json();

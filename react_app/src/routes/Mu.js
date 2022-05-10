@@ -1,4 +1,3 @@
-import env from "react-dotenv";
 import React, { Component } from 'react';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
@@ -107,7 +106,7 @@ export default class Mu extends Component {
       headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + localStorage.getItem('jwt'), },
       body: JSON.stringify({ did: did })
     };
-    const response = await fetch(env.BACKEND_MU_URL + '/postVerifiableCredential', requestOptions);
+    const response = await fetch(process.env.REACT_APP_BACKEND_MU_URL + '/postVerifiableCredential', requestOptions);
     const body = await response.json();
     if (body.data !== undefined) {
       const json = body.data;
@@ -125,7 +124,7 @@ export default class Mu extends Component {
         did: studentDid
       })
     };
-    const response = await fetch(env.BACKEND_MU_URL + '/postVerifyVerifiableCredential', requestOptions);
+    const response = await fetch(process.env.REACT_APP_BACKEND_MU_URL + '/postVerifyVerifiableCredential', requestOptions);
     const body = await response.json();
     if (body) {
       return true;
@@ -169,7 +168,7 @@ export default class Mu extends Component {
         did: studentDid
       })
     };
-    const response = await fetch(env.BACKEND_GYM_URL + '/postVerifyVerifiablePresentation', requestOptions);
+    const response = await fetch(process.env.REACT_APP_BACKEND_GYM_URL + '/postVerifyVerifiablePresentation', requestOptions);
     const body = await response.json();
     if (body) {
       return true;
