@@ -9,6 +9,7 @@ import Snackbar from '@mui/material/Snackbar';
 import { agent } from '../veramo/setup.ts';
 
 var STUDENT_DID = ''
+const UNIVERSITY_DID = 'did:ethr:ropsten:0x03d8fc8ec731cdc17f4046edaee7ad519f4c6bf2c3c1339ffd119b020f4a870788';
 
 export default class Mu extends Component {
   constructor(props) {
@@ -39,20 +40,6 @@ export default class Mu extends Component {
     </React.Fragment>
   );
 
-  // handleClick = async () => {
-  //   const did = await agent.didManagerGetOrCreate({
-  //     alias: 'student'
-  //   })
-  //   const vc = await this.createVerifiableCredential(did)
-  //   if (vc !== null && await this.verifyVerifiableCredential(vc, did)) {
-  //     const vp = await this.createVerifiablePresentation(vc)
-  //     if (await this.verifyVerifiablePresentation(vp, did)) {
-  //       window.history.pushState({}, undefined, "/muServices");
-  //       window.location.reload();
-  //     }
-  //   }
-  // }
-
   handleClick_vc = async () => {
     const did = await agent.didManagerGetOrCreate({
       alias: 'student'
@@ -80,7 +67,7 @@ export default class Mu extends Component {
     else {
       var vc = localStorage.getItem('verifiableCredential')
       vc = JSON.parse(vc)
-      if (STUDENT_DID !== '' && vc !== null && await this.verifyVerifiableCredential(vc, STUDENT_DID)) {
+      if (STUDENT_DID !== '' && vc !== null && this.verifyVerifiableCredential(vc, STUDENT_DID)) {
         const vp = await this.createVerifiablePresentation(vc)
         if (await this.verifyVerifiablePresentation(vp, STUDENT_DID)) {
           window.history.pushState({}, undefined, "/gym");
@@ -115,21 +102,17 @@ export default class Mu extends Component {
     return null
   }
 
-  verifyVerifiableCredential = async (vc, studentDid) => {
-    const requestOptions = {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + localStorage.getItem('jwt'), },
-      body: JSON.stringify({
-        vc: vc,
-        did: studentDid
-      })
-    };
-    const response = await fetch(process.env.REACT_APP_BACKEND_MU_URL + '/postVerifyVerifiableCredential', requestOptions);
-    const body = await response.json();
-    if (body) {
+  verifyVerifiableCredential (vc, studentDid) {
+    const subjectVc = vc.credentialSubject.id.did
+    const universityDid = vc.issuer.id
+    const studentClaim = vc.credentialSubject.claims.student
+    const expDate = vc.credentialSubject.claims.expDate
+    if (subjectVc === studentDid.did && universityDid === UNIVERSITY_DID && studentClaim && new Date(expDate) > new Date()) {
       return true;
     }
-    return false;
+    else {
+      return false;
+    }
   }
 
   getSelectiveDisclosure = async () => {

@@ -250,17 +250,6 @@ app.post('/postVerifiableCredential', [jsonParser, authenticateJWT], (req, res) 
     res.status(500).json({ message: 'Verifiable credential could not be created.' })
   }
 });
-app.post('/postVerifyVerifiableCredential', jsonParser, (req, res) => {
-  const vc = req.body.vc
-  const studentDid = req.body.did.did
-  const subjectVc = vc.credentialSubject.id.did
-  const universityDid = vc.issuer.id
-  const studentClaim = vc.credentialSubject.claims.student
-  const expDate = vc.credentialSubject.claims.expDate
-  if (subjectVc === studentDid && universityDid === UNIVERSITY_DID && studentClaim && new Date(expDate) > new Date()) {
-    res.status(200).json(true)
-  }
-});
 app.get('/getSelectiveDisclosure', (req, res) => {
   //NEXT THREE LINES HAVE BEEN EXECUTED ONLY ONCE
   // agent.didManagerCreate({

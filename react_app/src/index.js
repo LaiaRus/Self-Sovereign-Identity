@@ -14,7 +14,6 @@ render(
     <Routes>
       <Route path="/" element={<App />} />
       <Route path="mu" element={<Mu />} />
-      <Route path="login" element={<Login />} />
       <Route path="gym" element={<Gym />} />
     </Routes>
   </BrowserRouter>,

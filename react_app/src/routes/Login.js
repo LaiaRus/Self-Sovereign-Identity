@@ -74,7 +74,7 @@ export default function SignIn() {
 
   return (
     <ThemeProvider theme={theme}>
-      <Container component="main" maxWidth="xs">
+      <Container component="main" maxWidth="s">
         <CssBaseline />
         <Box
           sx={{
@@ -88,7 +88,7 @@ export default function SignIn() {
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
-            Sign in
+            Sign in Monsters University webpage
           </Typography>
           <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
             <TextField
@@ -99,7 +99,6 @@ export default function SignIn() {
               label="Username"
               name="username"
               autoComplete="username"
-              autoFocus
               error={wrongPass}
               onChange={textFieldOnChange}
             />
