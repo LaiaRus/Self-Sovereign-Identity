@@ -3,20 +3,26 @@ import { AbstractDIDStore } from '@veramo/did-manager'
 import { AbstractKeyStore, AbstractPrivateKeyStore, ManagedPrivateKey } from '@veramo/key-manager'
 import { ImportablePrivateKey } from '@veramo/key-manager/build/abstract-private-key-store'
 
+import cryptoJs from 'crypto-js'
+
 function getLocalStorage(keyName: string) {
-  var stringStorage = localStorage.getItem(keyName)
   var objectStorage = []
+  var stringStorage = localStorage.getItem(keyName)
   if (stringStorage !== null) {
-    objectStorage = JSON.parse(stringStorage)
+    stringStorage = cryptoJs.AES.decrypt(stringStorage, 'prova').toString(cryptoJs.enc.Utf8)
+    if (stringStorage !== null) {
+      objectStorage = JSON.parse(stringStorage)
+    }
   }
   return objectStorage
 }
 
-function setLocalStorage(keyName: string, value: object) {
+async function setLocalStorage(keyName: string, value: object) {
   const lStorage = getLocalStorage(keyName)
   lStorage.push(value)
   var stringStorage = JSON.stringify(lStorage)
-  localStorage.setItem(keyName, stringStorage)
+  var cipherStorage = cryptoJs.AES.encrypt(stringStorage, 'prova').toString()
+  localStorage.setItem(keyName, cipherStorage)
 }
 
 class MyPrivateKeyStore implements AbstractPrivateKeyStore {

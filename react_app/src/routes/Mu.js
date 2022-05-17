@@ -46,18 +46,22 @@ export default class Mu extends Component {
     })
     STUDENT_DID = did
     const vc = await this.createVerifiableCredential(did)
+    console.log('Created verifiable credential')
     var vc_string = ''
     if (vc !== null && await this.verifyVerifiableCredential(vc, did)) {
       vc_string = JSON.stringify(vc)
       localStorage.setItem('verifiableCredential', vc_string)
+      this.setState({ alertSeverity: 'success' });
+      this.setState({ alertMessage: 'A verifiable credential has been created successfully.' })
+      this.setState({ alertOpen: true });
     }
   }
 
   // Alert that student needs to get an anonymous credential first
   alertLackOfCredential() {
     this.setState({ alertSeverity: 'error' });
-    this.setState({ alertOpen: true });
     this.setState({ alertMessage: 'An anonymous credential is needed to access Monsters Gym webpage.' })
+    this.setState({ alertOpen: true });
   }
 
   handleClick_gym = async () => {
@@ -69,6 +73,7 @@ export default class Mu extends Component {
       vc = JSON.parse(vc)
       if (STUDENT_DID !== '' && vc !== null && this.verifyVerifiableCredential(vc, STUDENT_DID)) {
         const vp = await this.createVerifiablePresentation(vc)
+        console.log('Created verifiable presentation')
         if (await this.verifyVerifiablePresentation(vp, STUDENT_DID)) {
           window.history.pushState({}, undefined, "/gym");
           window.location.reload();
@@ -108,9 +113,11 @@ export default class Mu extends Component {
     const studentClaim = vc.credentialSubject.claims.student
     const expDate = vc.credentialSubject.claims.expDate
     if (subjectVc === studentDid.did && universityDid === UNIVERSITY_DID && studentClaim && new Date(expDate) > new Date()) {
+      console.log('Verified credential')
       return true;
     }
     else {
+      console.log('Wrong credential')
       return false;
     }
   }
@@ -154,8 +161,10 @@ export default class Mu extends Component {
     const response = await fetch(process.env.REACT_APP_BACKEND_GYM_URL + '/postVerifyVerifiablePresentation', requestOptions);
     const body = await response.json();
     if (body) {
+      console.log('Verified presentation')
       return true;
     }
+    console.log('Wrong presentation')
     return false;
   }
 

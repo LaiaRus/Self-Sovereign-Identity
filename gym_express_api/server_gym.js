@@ -11,7 +11,7 @@ var bodyParser = require('body-parser')
 var jsonParser = bodyParser.json() // To receive JSON bodies
 // ===================== EXPRESS APP CONFIGURATION =====================
 app.use(logger('dev')) // To console log when POST is being called
-app.use(cors())
+app.use(cors({origin: 'http://localhost:3000'}))
 app.use(bodyParser.urlencoded({ extended: true })) // needed to retrieve html form fields
 app.use(function (err, req, res, next) {
   console.error(err.stack)

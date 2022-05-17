@@ -78,7 +78,7 @@ const agent = createAgent({
   ]
 })
 // ===================== EXPRESS APP CONFIGURATION =====================
-app.use(cors())
+app.use(cors({origin: 'http://localhost:3000'}))
 app.use(bodyParser.urlencoded({ extended: true })) // needed to retrieve html form fields
 app.use(bodyParser.json()) // github
 app.use(cookieParser())
@@ -158,14 +158,23 @@ function getSaltUser(_username) {
 }
 async function validateUserPasswd(_username, _plainPasswd) {
   var hashedPasswd = getHashedPasswd(_username)
+  
+  
+  // const recalculatedHash = await scryptPbkdf.scrypt('ILoveCelia', '5546724a2408844afaccd02a29608730', 32)
+  // const recalculatedHash_hex = Buffer.from(recalculatedHash).toString('hex')
+  // console.log(recalculatedHash_hex)
+
+
+
+
   if (hashedPasswd != null) {
     const salt = getSaltUser(_username)
     const derivedKeyLength = 32
     const recalculatedHash = await scryptPbkdf.scrypt(_plainPasswd, salt, derivedKeyLength)
     const recalculatedHash_hex = Buffer.from(recalculatedHash).toString('hex')
     // TO SAVE THE SALT AND THE HASH IN passwords.json
-    // const salt = scryptPbkdf.salt()
-    // console.log(`[salt]: ${salt}`)
+    // const salt2 = scryptPbkdf.salt()
+    // console.log(`[salt]: ${Buffer.from(salt2).toString('hex')}`)
     if (recalculatedHash_hex !== '') {
       if (hashedPasswd == recalculatedHash_hex) {
         return true

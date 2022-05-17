@@ -19,6 +19,7 @@
     "@veramo/did-resolver": "^3.1.0",
     "@veramo/key-manager": "^3.1.0",
     "@veramo/kms-local": "^3.1.0",
+    "crypto-js": "^4.1.1",
     "did-resolver": "^3.2.0",
     "ethr-did-resolver": "^5.0.4",
     "react": "^17.0.2",
