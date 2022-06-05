@@ -64,7 +64,7 @@ export default class Mu extends Component {
     this.setState({ alertOpen: true });
   }
 
-  handleClick_gym = async () => {
+  handleClick_gym = async (navigate) => {
     if (localStorage.getItem('verifiableCredential') === null) {
       this.alertLackOfCredential()
     }
@@ -74,7 +74,7 @@ export default class Mu extends Component {
       if (STUDENT_DID !== '' && vc !== null && this.verifyVerifiableCredential(vc, STUDENT_DID)) {
         const vp = await this.createVerifiablePresentation(vc)
         console.log('Created verifiable presentation')
-        if (await this.verifyVerifiablePresentation(vp, STUDENT_DID)) {
+        if (await this.verifyVerifiablePresentation(vp, STUDENT_DID)) {          
           window.history.pushState({}, undefined, "/gym");
           window.location.reload();
         }

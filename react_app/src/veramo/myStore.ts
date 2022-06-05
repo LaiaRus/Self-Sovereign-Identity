@@ -2,14 +2,16 @@ import { IIdentifier, IKey, ManagedKeyInfo } from '@veramo/core'
 import { AbstractDIDStore } from '@veramo/did-manager'
 import { AbstractKeyStore, AbstractPrivateKeyStore, ManagedPrivateKey } from '@veramo/key-manager'
 import { ImportablePrivateKey } from '@veramo/key-manager/build/abstract-private-key-store'
+// import { localStorageManagement } from './localStorageManagement'
 
 import cryptoJs from 'crypto-js'
+
 
 function getLocalStorage(keyName: string) {
   var objectStorage = []
   var stringStorage = localStorage.getItem(keyName)
   if (stringStorage !== null) {
-    stringStorage = cryptoJs.AES.decrypt(stringStorage, 'prova').toString(cryptoJs.enc.Utf8)
+    stringStorage = cryptoJs.AES.decrypt(stringStorage, process.env.REACT_APP_CRYPTOJS_KEY).toString(cryptoJs.enc.Utf8)
     if (stringStorage !== null) {
       objectStorage = JSON.parse(stringStorage)
     }
@@ -21,7 +23,7 @@ async function setLocalStorage(keyName: string, value: object) {
   const lStorage = getLocalStorage(keyName)
   lStorage.push(value)
   var stringStorage = JSON.stringify(lStorage)
-  var cipherStorage = cryptoJs.AES.encrypt(stringStorage, 'prova').toString()
+  var cipherStorage = cryptoJs.AES.encrypt(stringStorage, process.env.REACT_APP_CRYPTOJS_KEY).toString()
   localStorage.setItem(keyName, cipherStorage)
 }
 
